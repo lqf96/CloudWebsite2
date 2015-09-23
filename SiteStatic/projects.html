@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pratt - Free Bootstrap 3 Theme">
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+    <title>未来云计算团队 官方网站</title>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <!-- jQuery Cookie -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <!-- Custom styles for this template -->
+    <link href="css/pratt_main.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+    <!-- iTechs Common JS & CSS -->
+    <link href="css/its_common.css" rel="stylesheet">
+    <script src="js/cw_login.js"></script>
+  </head>
+  <body data-spy="scroll" data-offset="0" data-target="#navigation">
+    <!-- Fixed navbar -->
+	    <div id="navigation" class="navbar navbar-default navbar-fixed-top">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand" href="main.html"><b>未来云计算团队</b></a>
+	        </div>
+	        <div class="navbar-collapse collapse">
+	          <ul class="nav navbar-nav">
+	            <li><a href="main.html#home">主页</a></li>
+	            <li class="active"><a href="#projects">项目</a></li>
+	            <li><a href="main.html#demo">Demo</a></li>
+                <li><a href="#contact">联系我们</a></li>
+                <li><a class="smothScroll">讨论区</a></li>
+	          </ul>
+	          <!-- Login form -->
+              <form class="navbar-form navbar-right" id="login_form" onsubmit="return false;">
+                  <input type="text" class="form-control" id="inputEmail" name="Email" placeholder="邮箱" />
+                  <div class="its_line_seprator visible-xs-block"></div>
+                  <input type="password" class="form-control" id="inputPassword" name="Password" placeholder="密码" />
+                  <div class="its_line_seprator visible-xs-block"></div>
+                  <input type="submit" class="btn btn-primary" value="Go!" id="login_submit" />
+                  <a href="register.html" class="btn btn-default">注册</a>
+              </form>
+              <!-- Logged User Status -->
+              <ul class="nav navbar-nav navbar-right" id="login_region">
+                  <!-- Email -->
+                  <li><a href="javascipt:void(0)"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<span id="logged_user_email"></span></a></li>
+                  <!-- Log out -->
+                  <li><a href="javascript:void(0)" id="logout_link"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;登出</a></li>
+              </ul>
+	        </div><!--/.nav-collapse -->
+	      </div>
+	    </div>
+        <!-- Introduction zone -->
+        <section id="projects" name="projects"></section>
+        <div id="group_nav" class="container">
+            <br />
+            <ul class="nav nav-pills">
+                <li><a href="#website_group">网站组</a></li>
+                <li><a href="#deep_learning_group">深度学习组</a></li>
+                <li><a href="#data_mining_group">数据挖掘组</a></li>
+				<li><a href="#deep_learning_group">赛事预测组</a></li>
+                <li><a href="#data_mining_group">全球洪水预警组</a></li>
+				<li><a href="#data_smart_hardware">智能硬件组</a></li>
+            </ul>
+            <hr />
+        </div>
+        <div id="projects-zone" class="container">
+            <div>
+                <a name="website_group"></a>
+                <h1>网站组</h1>
+                <p>未来云计算的网站由网络组自己开发搭建，采用阿里云服务器部署，主要面向全体队员和参观人员，介绍各个项目的情况和进度，展示团队工作情况和自我风采。</p>
+                <a href="#top">回页首</a>
+            </div>
+            <hr />
+            <div>
+                <a name="deep_learning_group"></a>
+                <h1>深度学习组</h1>
+                <p>本组工作旨在了解DEEP-LEARNING(深度学习)，通过matlab编程利用R-CNN库实现视频的动态捕捉和图像识别。我们拍摄了大量的图片，并通过标记学习来训练。</p>
+                <a href="#top">回页首</a>
+            </div>
+            <hr />
+            <div>
+                <a name="data_mining_group"></a>
+                <h1>数据挖掘组</h1>
+                <p>日常生活中大数据随处可见，通过网络爬虫爬去用户商品信息，我们从淘宝、天猫、京东、亚马逊的网购页面得到货物信息，通过URL分析得到需要的数据。</p>
+                <a href="#top">回页首</a>
+            </div>
+            <hr />
+			<div>
+                <a name="data_race_forecast"></a>
+                <h1>赛事预测组</h1>
+                <p>分析以往的赛事数据，我们可以推断出赛事的结果，当数据量足够大的时候，基于大数据的预测程序可以给出较为准确的赛事结果预测。</p>
+                <a href="#top">回页首</a>
+            </div>
+            <hr />
+			<div>
+                <a name="data_flood_warning"></a>
+                <h1>全球洪水预警组</h1>
+                <p>“筑起大数据时代的防洪堤”——我们通过网络上采集的降雨信息，分析出全球各个地方的洪水泛滥可能性，并提供预警。本项目曾经两度获得清华大学挑战杯一等奖。</p>
+                <a href="#top">回页首</a>
+            </div>
+            <hr />
+            <div>
+                <a name="data_smart_hardware"></a>
+                <h1>智能硬件组</h1>
+                <p>智能硬件</p>
+                <a href="#top">回页首</a>
+            </div>
+            <br />
+        </div>
+    <!-- Contact us -->
+    <section id="contact" name="contact"></section>
+	<div id="footerwrap">
+		<div class="container">
+            <!-- Contact -->
+			<div class="col-lg-8 col-md-7 col-sm-6">
+                <h3>清华——EMC“未来云计算”兴趣团队</h3>
+                <p>（并不知道这里放什么好）<br />
+                （建议放社团联系方式吧）</p>
+			</div>
+            <!-- Contact us -->
+			<div class="col-lg-4 col-md-5 col-sm-6">
+				<h3>留言 & 建议</h3>
+				<br>
+                <!-- Contact us form -->
+				<form role="form" enctype="plain" onsubmit="return false;">
+				<input type="name" name="Name" class="form-control" id="name1" placeholder="姓名">
+                <br />
+				<input type="email" name="Mail" class="form-control" id="email1" placeholder="邮箱">
+                <br />
+				<textarea class="form-control" name="Message" rows="5" placeholder="写点什么..."></textarea>
+                <br />
+				<button class="btn btn-large btn-success">提交</button>
+				</form>
+			</div>
+		</div>
+	</div>
+    <!-- Copyright -->
+    <div id="c"> 
+        <div class="container">
+            <p>未来云计算 版权所有&nbsp;&nbsp;&nbsp;20xx - 2015</p>
+        </div>
+    </div>
+</html>

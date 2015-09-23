@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pratt - Free Bootstrap 3 Theme">
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+    <title>未来云计算兴趣团队 官方网站</title>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <!-- jQuery Cookie -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <!-- AngularJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.16/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.16/angular-cookies.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <!-- Custom styles for this template -->
+    <link href="css/pratt_main.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+    <!-- Assets -->
+    <script src="js/pratt_smoothscroll.js"></script>
+    <!-- iTechs Common CSS & JS -->
+    <link href="css/its_common.css" rel="stylesheet">
+    <script src="js/cw_login.js"></script>
+    <script src="js/cw_forum.js"></script>
+  </head>
+  <body data-spy="scroll" data-offset="0" data-target="#navigation">
+    <!-- Fixed navbar -->
+	    <div id="navigation" class="navbar navbar-default navbar-fixed-top">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand" href="main.html"><b>未来云计算团队</b></a>
+	        </div>
+	        <div class="navbar-collapse collapse">
+	          <ul class="nav navbar-nav">
+	            <li><a href="main.html" class="smothscroll">主页</a></li>
+	            <li><a href="projects.html">项目</a></li>
+	            <li><a href="main.html#demo">Demo</a></li>
+                <li><a href="#contact" class="smothScroll">联系我们</a></li>
+                <li class="active"><a href="#forum" class="smothScroll">讨论区</a></li>
+            </ul>
+            <!-- Login form -->
+            <form class="navbar-form navbar-right" id="login_form" method="GET" action="/Dynamic/Users/Login/">
+                <input type="text" class="form-control" id="inputEmail" name="Email" placeholder="邮箱" />
+                <div class="its_line_seprator visible-xs-block"></div>
+                <input type="password" class="form-control" id="inputPassword" name="Password" placeholder="密码" />
+                <div class="its_line_seprator visible-xs-block"></div>
+                <input type="submit" class="btn btn-primary" value="Go!" />
+                <a href="register.html" class="btn btn-default">注册</a>
+            </form>
+            <!-- Logged User Status -->
+              <ul class="nav navbar-nav navbar-right" id="login_region">
+                  <!-- Email -->
+                  <li><a href="javascipt:void(0)"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<span id="logged_user_email"></span></a></li>
+                  <!-- Log out -->
+                  <li><a href="javascript:void(0)" id="logout_link"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;登出</a></li>
+              </ul>
+	        </div><!--/.nav-collapse -->
+	      </div>
+	    </div>
+        <!-- Forums -->
+        <section id="forum" name="forum"></section>
+        <div id="forum_zone" class="container" ng-app="cw_forum">
+            <br />
+            <h1 class="centered">未来云计算论坛</h1>
+            <!-- Boards -->
+            <ul class="nav nav-pills" ng-controller="BoardsController">
+                <li ng-repeat="Board in CWShare.Boards" ng-class="{active:(Board.Name==CurrentBoard)}">
+                    <a href="forum.html?board={{::Board.Name}}">{{::Board.Name}}</a>
+                </li>
+            </ul>
+            <hr />
+            <!-- Posts -->
+            <table class="table table-hover" ng-controller="PostListController">
+                <!-- Head -->
+		        <thead>
+		            <tr>
+			            <th>标题</th>
+			            <th>作者</th>
+			            <th>时间</th>
+			            <th>回复数</th>
+			            <th>最后回复</th>
+		            </tr>
+		        </thead>
+                <!-- Post list -->
+		        <tbody>
+                    <tr ng-if="!NoPost" ng-repeat="Post in PostList">
+                        <td>{{::Post.Title}}</td>
+                        <td>{{::Post.Author}}</td>
+                        <td>{{::CWShare.FmtTime(Post.Time)}}</td>
+                        <td>{{::Post.ReplyAmount-1}}</td>
+                        <td>{{::Post.LastReply}}</td>
+                    </tr>
+                    <!-- Display if no boards are available -->
+                    <tr ng-if="NoPost">
+                        <td colspan="5" align="center">（还没有帖子哦）</td>
+                    </tr>
+                </tbody>
+	        </table>
+            <hr />
+            <!-- Previous / Next Page -->
+            <table ng-controller="PageController">
+                <tr>
+                    <button class="btn btn-primary" ng-click="GoToPage(0)">&lt;&lt;</button>
+                    <button class="btn btn-default" ng-click="GoToPage(CWShare.Search.Page-1)">&lt;</button>
+                </tr>
+                <tr align="center">
+                    <input type="text" class="form-control" placeholder="页数" ng-model="PageNumberText" />&nsbp;&nbsp;
+                    <button class="btn btn-primary" ng-click="GoToPage(PageNumberText)">Go!</button>
+                </tr>
+                <tr align="right">
+                    <button class="btn btn-default" ng-click="GoToPage(CWShare.Search.Page+1)">&gt;</button>
+                    <button class="btn btn-primary" ng-click="GoToPage(CWShare.PageAmount-1)">&gt;&gt;</button>
+                </tr>
+            </table>
+            <hr />
+            <!-- New Post Form -->
+            <!-- Post list area -->
+            <h3>发个新帖</h3>
+            <form class="row" ng-controller="NewPostController" onsubmit="return false;">
+                <div class="col-sm-1 col-md-2 col-lg-2"></div>
+                <!-- Logged user -->
+                <div ng-if="CWShare.Logged==true" class="col-sm-10 col-md-8 col-lg-8">
+                    <!-- Title -->
+                    <input type="text" class="form-control" ng-model="Title" placeholder="标题" />
+                    <br />
+                    <!-- Content -->
+                    <textarea class="form-control" ng-model="Content" placeholder="说点什么..."></textarea>
+                    <br />
+                    <!-- Submit -->
+                    <button type="submit" class="btn btn-success" ng-class="{disabled:DisableNewPost}" ng-click="Submit()">提交</button>
+                </div>
+                <!-- Non-logged user -->
+                <div ng-if="CWShare.Logged==false" class="col-sm-10 col-md-8 col-lg-8">
+                    用户要登录或<a href="register.html">注册</a>才能发言哦。
+                </div>
+                <div class="col-sm-1 col-md-2 col-lg-2"></div>
+            </form>
+            <!-- Blank line for separation -->
+            <p>&nbsp;</p>
+        </div>
+        <!-- Contact us -->
+        <section id="contact" name="contact"></section>
+	    <div id="footerwrap">
+		<div class="container">
+            <!-- Contact -->
+			<div class="col-lg-8 col-md-7 col-sm-6">
+                <h3>清华——EMC“未来云计算”兴趣团队</h3>
+                <p>（并不知道这里放什么好）<br />
+                （建议放社团联系方式吧）</p>
+			</div>
+            <!-- Contact us -->
+			<div class="col-lg-4 col-md-5 col-sm-6">
+				<h3>留言 & 建议</h3>
+				<br>
+                <!-- Contact us form -->
+				<form role="form" enctype="plain" onsubmit="return false;">
+				<input type="name" name="Name" class="form-control" id="name1" placeholder="姓名">
+                <br />
+				<input type="email" name="Mail" class="form-control" id="email1" placeholder="邮箱">
+                <br />
+				<textarea class="form-control" name="Message" rows="5" placeholder="写点什么..."></textarea>
+                <br />
+				<button class="btn btn-large btn-success">提交</button>
+				</form>
+			</div>
+		</div>
+	</div>
+    <!-- Copyright -->
+    <div id="c"> 
+        <div class="container">
+            <p>未来云计算 版权所有&nbsp;&nbsp;&nbsp;20xx - 2015</p>
+        </div>
+    </div>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pratt - Free Bootstrap 3 Theme">
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+    <title>未来云计算兴趣团队 官方网站</title>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <!-- Angular JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.16/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.16/angular-cookies.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <!-- Custom styles for this template -->
+    <link href="css/pratt_main.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+    <!-- Assets -->
+    <script src="js/pratt_smoothscroll.js"></script>
+    <!-- iTechs Common CSS & JS -->
+    <link href="css/its_common.css" rel="stylesheet">
+    <script src="js/cw_login.js"></script>
+    <!-- Forum script -->
+    <script src="js/cw_forum.js"></script>
+  </head>
+  <body data-spy="scroll" data-offset="0" data-target="#navigation">
+    <!-- Fixed navbar -->
+	    <div id="navigation" class="navbar navbar-default navbar-fixed-top">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand" href="main.html"><b>未来云计算团队</b></a>
+	        </div>
+	        <div class="navbar-collapse collapse">
+	          <ul class="nav navbar-nav">
+	            <li><a href="main.html">主页</a></li>
+	            <li><a href="projects.html">项目</a></li>
+	            <li><a href="main.html#demo">Demo</a></li>
+                <li><a href="#contact" class="smothScroll">联系我们</a></li>
+                <li><a href="forum.html#forum">讨论区</a></li>
+            </ul>
+            <!-- Login form -->
+            <form class="navbar-form navbar-right" id="login_form" method="GET" action="/Dynamic/Users/Login/">
+                <input type="text" class="form-control" id="inputEmail" name="Email" placeholder="邮箱" />
+                <div class="its_line_seprator visible-xs-block"></div>
+                <input type="password" class="form-control" id="inputPassword" name="Password" placeholder="密码" />
+                <div class="its_line_seprator visible-xs-block"></div>
+                <input type="submit" class="btn btn-primary" value="Go!" />
+                <a href="register.html" class="btn btn-default">注册</a>
+            </form>
+            <!-- Logged User Status -->
+              <ul class="nav navbar-nav navbar-right" id="login_region">
+                  <!-- Email -->
+                  <li><a href="javascipt:void(0)"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<span id="logged_user_email"></span></a></li>
+                  <!-- Log out -->
+                  <li><a href="javascript:void(0)" id="logout_link"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;登出</a></li>
+              </ul>
+	        </div><!--/.nav-collapse -->
+	      </div>
+	    </div>
+        <!-- Forums -->
+        <section id="forum" name="forum"></section>
+        <div id="forum_zone" class="container" ng-app="cw_forum" ng-controller="post_ctrler">
+            <br />
+            <h1 class="centered">未来云计算论坛</h1>
+            <!-- Boards -->
+            <ul class="nav nav-pills" id="forum_boards" ng-controller="boards_ctrler">
+                <li ng-repeat="board in boards"><a href="forum.html?board={{::board}}">{{::board}}</a></li>
+            </ul>
+            <hr />
+            <!-- Post -->
+            <p><a href="forum.html?board={{::current_board}}">{{::current_board}}</a> &gt; <b>{{::post.Title}}</b></p>
+            <!-- Post content -->
+            <table class="table table-hover">
+                <tr ng-repeat="reply in Content">
+                    <td width="30%">
+                        <!-- Sub-post Number && User Name -->
+                        {{::reply.ContentID+1}}&nbsp;&nbsp;<b align="center">{{::reply.Author}}</b><br />
+                        <!-- Date -->
+                        日期：{{::maketime(reply.Time)}}
+                    </td>
+                    <!-- Content -->
+                    <td>{{::reply.Content}}</td>
+                </tr>
+	        </table>
+            <hr />
+            <!-- New Post Form -->
+            <!-- Post list area -->
+            <h3>发个新帖</h3>
+            <form method="POST" action="/Dynamic/DZ/AddPost" ng-controller="post_reply_ctrler">
+                <!-- Content -->
+                <textarea class="form-control" id="content" name="Content" placeholder="说点什么..."></textarea>
+                <br />
+                <!-- Board & Post ID -->
+                <input type="hidden" name="ID" ng-model="::post_id" />
+                <input type="hidden" name="Board" ng-model="::board" />
+                <!-- CSRF token -->
+                <input type="hidden" name="csrfmiddlewaretoken" ng-model="::csrftoken" />
+                <!-- Submit -->
+                <button type="submit" class="btn btn-success">提交</button>
+            </form>
+            <!-- Blank line for separation -->
+            <p>&nbsp;</p>
+        </div>
+        <!-- Contact us -->
+        <section id="contact" name="contact"></section>
+	    <div id="footerwrap">
+		<div class="container">
+            <!-- Contact -->
+			<div class="col-lg-8 col-md-7 col-sm-6">
+                <h3>清华——EMC“未来云计算”兴趣团队</h3>
+                <p>（并不知道这里放什么好）<br />
+                （建议放社团联系方式吧）</p>
+			</div>
+            <!-- Contact us -->
+			<div class="col-lg-4 col-md-5 col-sm-6">
+				<h3>留言 & 建议</h3>
+				<br>
+                <!-- Contact us form -->
+				<form role="form" enctype="plain" onsubmit="return false;">
+				<input type="name" name="Name" class="form-control" id="name1" placeholder="姓名">
+                <br />
+				<input type="email" name="Mail" class="form-control" id="email1" placeholder="邮箱">
+                <br />
+				<textarea class="form-control" name="Message" rows="5" placeholder="写点什么..."></textarea>
+                <br />
+				<button class="btn btn-large btn-success">提交</button>
+				</form>
+			</div>
+		</div>
+	</div>
+    <!-- Copyright -->
+    <div id="c"> 
+        <div class="container">
+            <p>未来云计算 版权所有&nbsp;&nbsp;&nbsp;20xx - 2015</p>
+        </div>
+    </div>
+</html>
