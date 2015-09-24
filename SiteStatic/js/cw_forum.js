@@ -40,16 +40,19 @@ $(function()
         //Select the board according to parameter
         var BoardFound = false;
         var BoardName = CWShare.Search["Board"]||CWShare.Boards[0];
-        for (BoardObj in CWShare.Boards)
+        for (i in CWShare.Boards)
+        {   var BoardObj = CWShare.Boards[i];
             if (BoardObj.Name==BoardName)
             {   BoardFound = true;
                 break;
             }
+        }
         CWShare.Search.Board = BoardFound?BoardName:CWShare.Boards[0];
         
         //Render board list
-        for (BoardObj in CWShare.Boards)
-        {   var BoardLabel = $("<li />").append(
+        for (i in CWShare.Boards)
+        {   var BoardObj = CWShare.Boards[i];
+            var BoardLabel = $("<li />").append(
                 $("<a />").attr("href","/forum.html?Board="+BoardObj.Name)
                     .text(BoardObj.Name));
             if (BoardObj.Name==CWShare.Search.Board)
@@ -85,7 +88,8 @@ $(function()
         
             //Show post list
             if (Data.Posts.length!=0)
-                for (Post in Data.Posts)
+                for (i in Data.Posts)
+                {   var Post = Data.Posts[i];
                     $("#FPostList").append($("<tr />")
                         .append($("<td />")
                             .text(Post.Title))
@@ -97,6 +101,7 @@ $(function()
                             .text(Post.ReplyAmount-1))
                         .append($("<td />")
                             .text(Post.LastReply)));
+                }
             //No post available
             else
                 $("#FPostList").append($("<tr />")
