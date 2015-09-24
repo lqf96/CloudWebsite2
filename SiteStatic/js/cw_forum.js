@@ -47,7 +47,7 @@ $(function()
                 break;
             }
         }
-        CWShare.Search.Board = BoardFound?BoardName:CWShare.Boards[0];
+        CWShare.Search.Board = BoardFound?BoardName:CWShare.Boards[0].Name;
         
         //Render board list
         for (i in CWShare.Boards)
