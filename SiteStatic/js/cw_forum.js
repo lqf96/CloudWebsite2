@@ -76,11 +76,8 @@ $(function()
         CWShare.Search.Page = (PageNumber.toString()=="NaN")?0:PageNumber;
         
         //Get posts in range
-        $.get("/Dynamic/DZ/GetBoard",
-        {
-            "Board":CWShare.Search.Board,
-            "Page":CWShare.Search.Page
-        },function(Resp)
+        $.get("/Dynamic/DZ/GetBoard?Board="+CWShare.Search.Board+"&Page="+CWShare.Search.Page,
+        function(Resp)
         {   //Get result
             var Data = Resp.Result;
             //Calculate page amount
