@@ -86,6 +86,12 @@ function SubmitRegForm()
             return;
         }
     
+    //Disable register button for 8 seconds
+	$("#RegisterBtn").addClass("disabled");
+	setTimeout(function()
+	{	$("#RegisterBtn").removeClass("disabled");
+	},8000);
+    
     //Send AJAX request
 	$.post("/Dynamic/Users/UserReg1",
         {Email:$("#r_inputEmail").val(),
