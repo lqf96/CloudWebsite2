@@ -91,17 +91,19 @@
             <!-- Previous / Next Page -->
             <table>
                 <tr>
+                <td>
                     <button class="btn btn-primary" onclick="GoToPage(0)">&lt;&lt;</button>&nbsp;
                     <button class="btn btn-default" onclick="GoToPage(CWShare.Search.Page-1)">&lt;</button>
-                </tr>
-                <tr align="center">
+                </td>
+                <td align="center">
                     <input type="text" class="form-control" placeholder="页数" id="FTPageNumber" />&nbsp;/&nbsp;
                     <span id="FPageAmount"></span>&nbsp;&nbsp;
                     <button class="btn btn-primary" onclick="GoToPage(PageNumberText)">Go!</button>
-                </tr>
-                <tr align="right">
-                    <button class="btn btn-default" onclick="GoToPage(CWShare.Search.Page+1)">&gt;</button>7nbsp;
+                </td>
+                <td align="right">
+                    <button class="btn btn-default" onclick="GoToPage(CWShare.Search.Page+1)">&gt;</button>&nbsp;
                     <button class="btn btn-primary" onclick="GoToPage(CWShare.PageAmount-1)">&gt;&gt;</button>
+                </td>
                 </tr>
             </table>
             <hr />
