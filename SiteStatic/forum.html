@@ -77,11 +77,11 @@
                 <!-- Head -->
 		        <thead>
 		            <tr>
-			            <th>标题</th>
-			            <th>作者</th>
-			            <th>时间</th>
-			            <th>回复数</th>
-			            <th>最后回复</th>
+			            <th width="50%">标题</th>
+			            <th width="10%">作者</th>
+			            <th width="20%">时间</th>
+			            <th width="10%">回复数</th>
+			            <th width="10%">最后回复</th>
 		            </tr>
 		        </thead>
                 <!-- Post list -->
@@ -89,7 +89,7 @@
 	        </table>
             <hr />
             <!-- Previous / Next Page -->
-            <table>
+            <table width="100%">
                 <tr>
                 <td>
                     <button class="btn btn-primary" onclick="GoToPage(0)">&lt;&lt;</button>&nbsp;
@@ -110,10 +110,10 @@
             <!-- New Post Form -->
             <!-- Post list area -->
             <h3 align="center">发个新帖</h3>
-            <form class="row" onsubmit="return false;" id="FNewPost">
+            <form class="row" onsubmit="return false;">
                 <div class="col-sm-1 col-md-2 col-lg-2"></div>
                 <!-- Logged user -->
-                <div class="col-sm-10 col-md-8 col-lg-8">
+                <div class="col-sm-10 col-md-8 col-lg-8" id="FNewPost">
                     <!-- Title -->
                     <input type="text" class="form-control" id="FNewPostTitle" placeholder="标题" />
                     <br />
