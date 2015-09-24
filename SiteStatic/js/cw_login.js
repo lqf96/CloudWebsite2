@@ -26,8 +26,11 @@ $(function()
         }
         
         //Share variables with the whole page
-        for (_var in data)
-            CWShare[_var] = data[_var];
+        CWShare.Logged = data.Logged;
+        if (CWShare.Logged)
+        {   CWShare.Email = data.Email;
+            CWShare.Username = data.Username;
+        }
     });
     
     //Log-in action

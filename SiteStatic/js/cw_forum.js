@@ -1,9 +1,6 @@
-//Angular app
-var cwf = angular.module("cw_forum",[]);
-
 //===== Basic functions & constants =====
 //Time formatter
-CWShare.FmtTime = function(time_str)
+function FmtTime(time_str)
 {   //Make time object
     var time = new Date(time_str);
     
@@ -13,16 +10,26 @@ CWShare.FmtTime = function(time_str)
 }
 
 //Post entry per page
-CWShare.EntryPerPage = 20;
+var EntryPerPage = 20;
 
-//===== App controllers =====
-//Forum boards controller
-cwf.controller("BoardsController",function($scope,$http,$location)
-{   $http.get("/Dynamic/DZ/GetBoardList").success(function(Resp)
-    {   //Set global variable
+//===== Page Rendering =====
+//Main program
+$(function()
+{   //Get boards list
+    $.get("/Dynamic/DZ/GetBoardList",function(Resp)
+    {   //Parse JSON
+        Resp = JSON.parse(Resp);
+        
+        //Set global variable
         CWShare.Boards = Resp.Result;
-        //Save all address parameters
-        CWShare.Search = $location.search();
+        //Save all search parameters
+        var SearchArray = location.search.substr(1).split("&");
+        CWShare.Search = {};
+        for (SearchSubStr in SearchArray)
+            {   var SubStrResult = SearchSubStr.match(/^(.*)=(.*)$/);
+                if (SubStrResult)
+                    CWShare.Search[SubStrResult[1]] = SubStrResult[2];
+            }
         
         //No board available
         if (CWShare.Boards.length==0)
@@ -41,84 +48,118 @@ cwf.controller("BoardsController",function($scope,$http,$location)
             {   BoardFound = true;
                 break;
             }
-        CWShare.Search.Board = $scope.CurrentBoard = BoardFound?BoardName:CWShare.Boards[0];
-    });
-});
-
-//Post list controller
-cwf.controller("PostListController",function($scope,$http)
-{   //No boards
-    if ("NoBoard" in CWShare.Boards[0])
-    {   $scope.NoPost = true;
-        return;
-    }
-    
-    //Get page number
-    var PageNumber = parseInt(CWShare.Search["Page"]||"0");
-    CWShare.Search.Page = (PageNumber.toString()=="NaN")?0:PageNumber;
-    
-    //Get posts in range
-    $http.get("/Dynamic/DZ/GetBoard",
-    {params:{
-        "Board":CWShare.Search.Board,
-        "Page":CWShare.Search.Page
-    }}).success(function(Resp)
-    {   var Data = Resp.Result;
-        //Calculate page amount
-        CWShare.PageAmount = Math.ceil(Data.PostAmount/CWShare.EntryPerPage);
+        CWShare.Search.Board = BoardFound?BoardName:CWShare.Boards[0];
         
-        //Copy post list
-        if (Data.Posts.length!=0)
-        {   $scope.PostList = Data.Posts;
-            $scope.NoPost = false;
+        //Render board list
+        for (BoardObj in CWShare.Boards)
+        {   var BoardLabel = $("<li />").append(
+                $("<a />").attr("href","/forum.html?Board="+BoardObj.Name)
+                    .text(BoardObj.Name));
+            if (BoardObj.Name==CWShare.Search.Board)
+                BoardLabel.addClass("active");
+            BoardLabel.appendTo($("#FBoardList"));
         }
-        //No post available
-        else
-            $scope.NoPost = true;
-    });
-});
-
-//Page switch controller
-cwf.controller("PageController",function($scope,$window)
-{   //Show current page number
-    $scope.PageNumberText = ""+(CWShare.Search.Page+1);
-    //Go to page
-    $scope.GoToPage = function(Page)
-    {   //Extra processing for string
-        if (typeof(Page)=="string")
-        {   Page = parseInt(Page); 
-            if (Page.toString()=="NaN")
-            {   $window.alert("输入的页数非法，请重新输入！");
-                return;
-            }
+    //Get post list
+    }).then(function()
+    {   //No boards available
+        if ("NoBoard" in CWShare.Boards[0])
+        {   $("#FPostList").append($("<tr />")
+                .append($("<td />")
+                    .attr("colspan","5")
+                    .attr("align","center")
+                    .text("目前还没有任何板块！('_')")));
+            return;
         }
         
-        //Restrict page number in a range
-        if (Page<0)
-            Page = 0;
-        else if (Page>=CWShare.PageAmount)
-            Page = (CWShare.PageAmount==0)?0:CWShare.PageAmount-1;
+        //Get page number
+        var PageNumber = parseInt(CWShare.Search["Page"]||"0");
+        CWShare.Search.Page = (PageNumber.toString()=="NaN")?0:PageNumber;
         
-        //Go to page
-        $window.location.href = "/forum.html?Board="+CWShare.Search.Board+"&Page="+Page;
-    }
-});
-
-//Forum new post controller
-cwf.controller("NewPostController",function($scope,$http,$window)
-{   //No boards
-    $scope.DisableNewPost = ("NoBoard" in CWShare.Boards[0]);
-    
-    //Submit form
-    $scope.Submit = function()
-    {   $http.post("/Dynamic/DZ/NewPost",
+        //Get posts in range
+        $.get("/Dynamic/DZ/GetBoard",
         {
-            "Title":$scope.Title,
-            "Content":$scope.Content,
             "Board":CWShare.Search.Board,
-            "csrfmiddlewaretoken":$.cookie("csrftoken")
-        }).success(function()
-        {   $window.location.reload();
+            "Page":CWShare.Search.Page
+        },function(Resp)
+        {   //Parse JSON & Get result
+            var Data = JSON.parse(Resp).Result;
+            //Calculate page amount
+            CWShare.PageAmount = Math.ceil(Data.PostAmount/CWShare.EntryPerPage);
+        
+            //Show post list
+            if (Data.Posts.length!=0)
+                for (Post in Data.Posts)
+                    $("#FPostList").append($("<tr />")
+                        .append($("<td />")
+                            .text(Post.Title))
+                        .append($("<td />")
+                            .text(Post.Author))
+                        .append($("<td />")
+                            .text(FmtTime(Post.Time)))
+                        .append($("<td />")
+                            .text(Post.ReplyAmount-1))
+                        .append($("<td />")
+                            .text(Post.LastReply)));
+            //No post available
+            else
+                $("#FPostList").append($("<tr />")
+                    .append($("<td />")
+                        .attr("colspan","5")
+                        .attr("align","center")
+                        .text("该页面/板块还没有帖子哦。")));
+        //Page switching
+        }).then(function()
+        {   //Show current page number and total page number
+            $("#FTPageNumber").val(CWShare.Search.Page+1);
+            $("#FPageAmount").val(CWShare.PageAmount);
         });
-    };
+    //New post form
+    }).then(function()
+    {   //Non-logged user
+        if (!CWShare.Logged)
+        {   $("#FNewPost").css("display","none");
+            return;
+        }
+        //Logged user
+        else
+            $("#FNewPostNonLogged").css("display","none");
+        
+        //No boards available
+        if ("NoBoard" in CWShare.Boards[0])
+            $("#FNewPostSubmit").addClass("disabled");
+        
+        //Post data when submitted
+        $("#FNewPostSubmit").on("click",function()
+        {   $.post("/Dynamic/DZ/NewPost",
+            {
+                "Title":$("#FNewPostTitle").val(),
+                "Content":$("#FNewPostContent").val(),
+                "Board":CWShare.Search.Board,
+                "csrfmiddlewaretoken":$.cookie("csrftoken")
+            },function()
+            {   location.reload();
+            });
+        });
+    });
 });
+
+//Go to page function
+function GoToPage(Page)
+{   //Extra processing for string
+    if (typeof(Page)=="string")
+    {   Page = parseInt(Page); 
+        if (Page.toString()=="NaN")
+        {   window.alert("输入的页数非法，请重新输入！");
+            return;
+        }
+    }
+    
+    //Restrict page number in a range
+    if (Page<0)
+        Page = 0;
+    else if (Page>=CWShare.PageAmount)
+        Page = (CWShare.PageAmount==0)?0:CWShare.PageAmount-1;
+    
+    //Go to page
+    window.location.href = "/forum.html?Board="+CWShare.Search.Board+"&Page="+Page;
+}
