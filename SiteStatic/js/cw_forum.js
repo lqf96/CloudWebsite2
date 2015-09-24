@@ -17,10 +17,7 @@ var EntryPerPage = 20;
 $(function()
 {   //Get boards list
     $.get("/Dynamic/DZ/GetBoardList",function(Resp)
-    {   //Parse JSON
-        Resp = JSON.parse(Resp);
-        
-        //Set global variable
+    {   //Set global variable
         CWShare.Boards = Resp.Result;
         //Save all search parameters
         var SearchArray = location.search.substr(1).split("&");
@@ -81,8 +78,8 @@ $(function()
             "Board":CWShare.Search.Board,
             "Page":CWShare.Search.Page
         },function(Resp)
-        {   //Parse JSON & Get result
-            var Data = JSON.parse(Resp).Result;
+        {   //Get result
+            var Data = Resp.Result;
             //Calculate page amount
             CWShare.PageAmount = Math.ceil(Data.PostAmount/CWShare.EntryPerPage);
         
