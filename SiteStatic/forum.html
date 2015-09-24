@@ -46,14 +46,14 @@
                 <li class="active"><a href="#forum" class="smothScroll">讨论区</a></li>
             </ul>
             <!-- Login form -->
-            <form class="navbar-form navbar-right" id="login_form" method="GET" action="/Dynamic/Users/Login/">
-                <input type="text" class="form-control" id="inputEmail" name="Email" placeholder="邮箱" />
-                <div class="its_line_seprator visible-xs-block"></div>
-                <input type="password" class="form-control" id="inputPassword" name="Password" placeholder="密码" />
-                <div class="its_line_seprator visible-xs-block"></div>
-                <input type="submit" class="btn btn-primary" value="Go!" />
-                <a href="register.html" class="btn btn-default">注册</a>
-            </form>
+              <form class="navbar-form navbar-right" id="login_form" onsubmit="return false;">
+                  <input type="text" class="form-control" id="inputEmail" name="Email" placeholder="邮箱" />
+                  <div class="its_line_seprator visible-xs-block"></div>
+                  <input type="password" class="form-control" id="inputPassword" name="Password" placeholder="密码" />
+                  <div class="its_line_seprator visible-xs-block"></div>
+                  <input type="submit" class="btn btn-primary" value="Go!" id="login_submit" />
+                  <a href="register.html" class="btn btn-default">注册</a>
+              </form>
             <!-- Logged User Status -->
             <ul class="nav navbar-nav navbar-right" id="login_region">
                   <!-- Email -->
@@ -96,9 +96,9 @@
                     <button class="btn btn-default" onclick="GoToPage(CWShare.Search.Page-1)">&lt;</button>
                 </td>
                 <td align="center">
-                    <input type="text" class="form-control" placeholder="页数" id="FTPageNumber" size="8" />&nbsp;/&nbsp;
+                    <input type="text" class="form-inline" placeholder="页数" id="FTPageNumber" size="8" />&nbsp;/&nbsp;
                     <span id="FPageAmount"></span>&nbsp;&nbsp;
-                    <button class="btn btn-primary" onclick="GoToPage(PageNumberText)">Go!</button>
+                    <button class="btn btn-primary" onclick="GoToPage($('#FTPageNumber').val())">Go!</button>
                 </td>
                 <td align="right">
                     <button class="btn btn-default" onclick="GoToPage(CWShare.Search.Page+1)">&gt;</button>&nbsp;
