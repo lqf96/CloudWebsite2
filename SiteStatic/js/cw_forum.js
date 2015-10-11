@@ -110,7 +110,7 @@ $(function()
         }).then(function()
         {   //Show current page number and total page number
             $("#FTPageNumber").val(CWShare.Search.Page+1);
-            $("#FPageAmount").val(CWShare.PageAmount);
+            $("#FPageAmount").text(CWShare.PageAmount);
         });
     //New post form
     }).then(function()
