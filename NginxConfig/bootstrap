@@ -1,0 +1,27 @@
+#!/bin/bash
+
+echo "Please enter your password if prompted!"
+echo "* Creating link to cloud website..."
+# Create "www" folder i it does not exist
+if [ ! -d "/var/www" ]; then
+    sudo mkdir /var/www
+fi
+# Create link to website
+cd `dirname $0`
+sudo ln -s $(pwd)/.. /var/www/CloudWebsite
+# Copy certificate folder from remote
+echo "* Fetching certificate folder..."
+echo -n "Enter certificate folder: "
+read cert_dir_addr
+scp -r $cert_dir_addr ../Certificates
+sudo ln -s $(pwd)/../Certificates /var/www/certs
+# Copy files to NGINX config folder
+echo "* Copying files to NGINX config folder..."
+sudo ln -s $(pwd)/thcloud.ml /etc/nginx/sites-enabled/thcloud.ml
+sudo ln -s $(pwd)/admin.thcloud.ml /etc/nginx/sites-enabled/admin.thcloud.ml
+# Test config
+echo "* Testing NGINX config..."
+sudo service nginx configtest
+# Finished
+echo "Bootstrap finished!"
+echo "You can now restart NGINX using \"sudo service nginx restart\"!"

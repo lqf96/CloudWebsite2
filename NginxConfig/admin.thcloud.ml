@@ -1,16 +1,16 @@
 # Cloud Website Admin Configuration
 server {
     # Port 80 (HTTP) & 443 (HTTPS)
-    listen [::]:80;
-    listen [::]:443 ssl;
+    listen 80;
+    listen 443 ssl;
     # Server name
     server_name admin.thcloud.ml;
     
     # SSL certificate & key
-    ssl_certificate /home/lqf/server/certs/admin.thcloud.ml.crt;
-    ssl_certificate_key /home/lqf/server/certs/admin.thcloud.ml.key;
+    ssl_certificate /var/www/certs/admin.thcloud.ml.crt;
+    ssl_certificate_key /var/www/certs/admin.thcloud.ml.key;
     # Diffie-Hellman params
-    ssl_dhparam /home/lqf/server/certs/dhparams.pem;
+    ssl_dhparam /var/www/certs/dhparams.pem;
     
     # SSL cipher settings
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
@@ -43,7 +43,7 @@ server {
     # Site static content
     location /static/
     {
-        alias /home/lqf/sites/thcloud.ml/CloudWebsite/AdminStatic/;
+        alias /var/www/CloudWebsite/AdminStatic/;
         try_files $uri $uri/ =404;
         expires 8d;
     }

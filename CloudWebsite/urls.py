@@ -39,20 +39,6 @@ urlpatterns = [
 
 # ===== Main Application =====
 # User API paths
-urlpatterns += MakeURLList([
-    "Users.UserReg1",
-    "Users.UserReg2",
-    "Users.Login",
-    "Users.Logout",
-    "Users.LoginStatus",
-    "Users.EmailValidation"
-],"Dynamic/",Users)
-
+MakeURLList(urlpatterns,"Users","Dynamic/")
 # Discussion zone API paths
-urlpatterns += MakeURLList([
-    "DZ.GetBoard",
-    "DZ.GetBoardList",
-    "DZ.GetPost",
-    "DZ.NewPost",
-    "DZ.NewReply"
-],"Dynamic/",DZ)
+MakeURLList(urlpatterns,"DZ","Dynamic/")

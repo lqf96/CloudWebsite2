@@ -68,6 +68,9 @@ $(function()
                     .attr("colspan","5")
                     .attr("align","center")
                     .text("目前还没有任何板块！('_')")));
+            //Show current page number and total page number
+            $("#FTPageNumber").val("0");
+            $("#FPageAmount").text("0");
             return;
         }
         
