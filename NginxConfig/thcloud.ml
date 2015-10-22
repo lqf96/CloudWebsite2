@@ -45,6 +45,7 @@ server {
 server {
     # Port 80 (HTTP) & 443 (HTTPS)
     listen 80;
+    listen 8080;
     listen 443 ssl;
     # Server name
     server_name thcloud.ml;
