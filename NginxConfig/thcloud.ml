@@ -21,6 +21,12 @@ server {
     ssl_session_cache shared:SSL:15m;
     ssl_session_timeout 15m;
     
+    # Force HTTPS
+    if ($scheme = 'http')
+    {
+        rewrite ^(.*)$ https://$host$1 permanent;
+    }
+
     # Backend API
     location /Dynamic/
     {
@@ -66,5 +72,5 @@ server {
     ssl_session_timeout 15m;
     
     # Redirect to "www" sub-domain
-    rewrite ^(.*)$ $scheme://www.thcloud.ml$1 permanent;
+    rewrite ^(.*)$ https://www.thcloud.ml$1 permanent;
 }
