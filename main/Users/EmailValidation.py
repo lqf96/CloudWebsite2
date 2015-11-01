@@ -4,6 +4,8 @@ from django.http import HttpResponse,HttpResponseRedirect
 import string,json
 # Models
 from main.UserModels import EmailValidationRecord
+# Site foundation library
+from CloudWebsite.CWFoundation import InternalRedirect
 
 # Email validation
 def GET(request):
@@ -14,12 +16,9 @@ def GET(request):
     except:
         return HttpResponse(json.dumps({"Status":"Failed","Reason":"ValidationInfoNotMatch"}),content_type="application/json")
     
-    # Allow access to "internal" address
-    request.session["Internal"] = True
     # Store data
     request.session["EmailValidationData"] = ValidationRecord.Data
     # Remove validation record
     ValidationRecord.delete()
-    
-    # Redirect to given address
-    return HttpResponseRedirect(ValidationRecord.RedirectAddr)
+    # Redirect internally to given address
+    return InternalRedirect("/Internal/")

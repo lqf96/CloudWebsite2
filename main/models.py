@@ -1,3 +1,3 @@
-# (This is only a stub for import packages & modules that contains needed files)
-from UserModels import User,EmailValidationRecord
+# (This is only a stub for importing packages & modules that contains needed files)
+from UserModels import *
 from DZModels import DiscussionZoneBoard,DiscussionZonePost,DiscussionZoneContent

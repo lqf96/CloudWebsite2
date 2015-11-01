@@ -19,10 +19,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 # Django xadmin ibrary
 #import xadmin
-# CloudWebsite foundation
-from CWFoundation import MakeURLList
-# Main application packages
-from main import Users, DZ
+# Main application URL configuration
+from main.urls import urls as main_urls
 
 # Auto discover
 #xadmin.autodiscover()
@@ -37,8 +35,5 @@ urlpatterns = [
     url(r'^admin/',include(admin.site.urls)),
 ]
 
-# ===== Main Application =====
-# User API paths
-MakeURLList(urlpatterns,"Users","Dynamic/")
-# Discussion zone API paths
-MakeURLList(urlpatterns,"DZ","Dynamic/")
+# Main site URLs
+urlpatterns += main_urls
