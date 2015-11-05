@@ -9,6 +9,9 @@ import json,random,sys
 from main.UserModels import User,EmailValidationRecord
 # Settings
 from CloudWebsite import settings
+# Helper functions
+from EmailValidation import CreateEmailValidation
+from LoginStatus import Logout
 
 # Validation email template
 EMAIL_TEMPLATE = u"<p>您注册了未来云计算官网的用户，请点击<a href='%s'>此处</a>完成注册。</p>"
@@ -16,11 +19,8 @@ EMAIL_TEMPLATE_PLAIN = u"您注册了未来云计算官网的用户，请前往%
 EMAIL_TITLE = u"未来云计算团队 注册确认"
 
 # User registration
+@Logout
 def POST(request):
-    # Refuse to register if the user already logged
-    if ("Logged" in request.session) and (request.session["Logged"]==True):
-        return HttpResponse(json.dumps({"Status":"Failed","Reason":"AlreadyLogged"}),content_type="application/json")
-    
     # Find if there is a user with same name or email
     _Email = request.POST.get("Email","")
     _Username = request.POST.get("Username","")
@@ -32,12 +32,11 @@ def POST(request):
     
     # Create email validation record and save record
     EmailRecord = EmailValidationRecord()
-    EmailRecord.Email = _Email
-    EmailRecord.RedirectAddr = "https://"+request.get_host()+"/Dynamic/Users/UserReg2"
-    EmailRecord.Nonce = random.randint(0,sys.maxint)
-    EmailRecord.Data = json.dumps({"Email":_Email,"Username":_Username,"Password":_Password})
+    CreateEmailValidation(_Email, \
+        "https://"+request.get_host()+"/Dynamic/Users/UserReg2", \
+        {"Email":_Email,"Username":_Username,"Password":_Password})
     # Make email validation address
-    ValidationAddr = "https://"+request.get_host()+"/Dynamic/Users/EmailValidation?Nonce=%d&Email=%s" % (EmailRecord.Nonce,_Email)
+    ValidationAddr = "https://%s/Dynamic/Users/EmailValidation?Nonce=%d&Email=%s" % (request.get_host(),EmailRecord.Nonce,_Email)
 
     try:
         # Render e-mail content

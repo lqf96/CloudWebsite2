@@ -17,3 +17,26 @@ def GET(request):
     # Not logged
     else:
         return HttpResponse(json.dumps({"Status":"Success","Logged":False}))
+
+# [Helper Functions]
+# Log-in only view decorator
+def Login(view):
+    def LoginView(request):
+        # User logged
+        if ("Logged" in request.session) and (request.session["Logged"]==True):
+            return view(request)
+        # Not logged
+        else:
+            return HttpResponse(json.dumps({"Status":"Failed","Reason":"UserNotLogged"}))
+    return LoginView
+
+# Log-out only view decorator
+def Logout(view):
+    def LogoutView(request):
+        # User not logged
+        if ("Logged" not in request.session) or (request.session["Logged"]==False):
+            return view(request)
+        # Not logged
+        else:
+            return HttpResponse(json.dumps({"Status":"Failed","Reason":"UserAlreadyLogged"}))
+    return LogoutView

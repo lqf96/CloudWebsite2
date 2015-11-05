@@ -1,10 +1,9 @@
 # Django libraries
-from django.http import HttpResponse,Http404
+from django.http import HttpResponse,Http404,HttpResponseRedirect
 from django.conf.urls import url
 # Python system libraries
 import json,inspect
 from datetime import datetime
-from copy import copy
 # Site settings
 from CloudWebsite.settings import FRONT_END_SERVER
 
@@ -28,9 +27,7 @@ def __MakeURLList(url_list,obj,path_list,prefix):
                     else:
                         raise Http404
                 # Build django routing object
-                url_obj = url("^"+prefix+"/".join(_path_list)+"$",Wrapper)
-                url_obj.cw_path = copy(_path_list)
-                url_list.append(url_obj)
+                url_list.append(url("^"+prefix+"/".join(_path_list)+"$",Wrapper))
             # Call helper (to avoid lambda-related problems)
             __MakeURLListHelper(path_list,obj.__dict__[child_name])
         # Package
@@ -47,16 +44,6 @@ def MakeURLList(url_list,package_name,prefix=""):
     # Enter core function
     __MakeURLList(url_list,obj,path_list,prefix)
 
-# Get view by path
-def GetView(url_list,view_path):
-    split_view_path = view_path.split(".")
-    # Search for the view path in the list
-    for view_url in url_list:
-        if ("cw_path" in view_url) and (cmp(view_url.cw_path,split_view_path)==0):
-            return view_url.callback
-    # View not found
-    return None
-
 # ===== View utils =====
 # Internal view decorator
 def InternalView(view):
@@ -64,25 +51,26 @@ def InternalView(view):
     def IView(request):
         # Check if internal access is allowed
         if ("Internal" in request.session) and (request.session["Internal"]==True):
-            response = view(request)
             # Disable internal view access
             request.session["Internal"] = False
-            return response
+            # Append internal arguments to request object
+            request.cw_iargs = json.loads(request.session["InternalArgs"])
+            del request.session["InternalArgs"]
+            # Handle request
+            return view(request)
         # Not allowed
         else:
             return HttpResponse(json.dumps({"Status":"Failed","Reason":"InternalAccessNotGranted"}),content_type="application/json")
     return IView
 
 # Redirect to an internal view
-def InternalRedirect(request,next_view,params):
+def InternalRedirect(address,args):
     # Allow visiting internal view
     request.session["Internal"] = True
-    # Set internal view parameters
-    if "cw_iparams" in request.__dict__:
-        del request.cw_iparams
-    request.cw_iparams = params
-    # Call internal view
-    return next_view(request)
+    # Save internal arguments to session
+    request.session["InternalArgs"] = json.dumps(args) if type(args).__name__=="dict" else argss
+    # Do redirection
+    return HttpResponseRedirect(address)
 
 # ===== Data utils =====
 # Make time string

@@ -11,17 +11,15 @@ from CloudWebsite.CWFoundation import InternalView
 @InternalView
 def GET(request):
     NewUser = User()
-    NewUserData = json.loads(request.session["EmailValidationData"])
-    
-    NewUser.Email = NewUserData["Email"]
-    NewUser.Username = NewUserData["Username"]
-    NewUser.Password = NewUserData["Password"]
+    NewUser.Email = request.cw_iargs["Email"]
+    NewUser.Username = request.cw_iargs["Username"]
+    NewUser.Password = request.cw_iargs["Password"]
     NewUser.save()
     
     # Log user in
     request.session["Logged"] = True
-    request.session["Email"] = NewUserData["Email"]
-    request.session["Username"] = NewUserData["Username"]
+    request.session["Email"] = request.cw_iargs["Email"]
+    request.session["Username"] = request.cw_iargs["Username"]
     
     # Redirect to main page
     return HttpResponseRedirect("https://"+request.get_host())

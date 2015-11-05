@@ -4,13 +4,12 @@ from django.http import HttpResponse,HttpResponseRedirect
 import json
 # Models
 from main.UserModels import User
+# Helper functions
+from LoginStatus import Logout
 
 # Log in
+@Logout
 def POST(request):
-    # Triggers error if an logged user wanted to log in again
-    if ("Logged" in request.session) and (request.session["Logged"]==True):
-        return HttpResponse(json.dumps({"Status":"Failed","Reason":"AlreadyLogged"}),content_type="application/json")
-    
     _Email = request.POST.get("Email","")
     _Password = request.POST.get("Password","")
     try:

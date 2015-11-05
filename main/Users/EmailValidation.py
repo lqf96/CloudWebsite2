@@ -1,7 +1,7 @@
 # Django libraries
 from django.http import HttpResponse,HttpResponseRedirect
 # Python system libraries
-import string,json
+import string,json,random,sys
 # Models
 from main.UserModels import EmailValidationRecord
 # Site foundation library
@@ -16,9 +16,18 @@ def GET(request):
     except:
         return HttpResponse(json.dumps({"Status":"Failed","Reason":"ValidationInfoNotMatch"}),content_type="application/json")
     
-    # Store data
-    request.session["EmailValidationData"] = ValidationRecord.Data
+    # Redirect internally to given address
+    response = InternalRedirect(ValidationRecord.RedirectAddr,ValidationRecord.Data)
     # Remove validation record
     ValidationRecord.delete()
-    # Redirect internally to given address
-    return InternalRedirect("/Internal/")
+    return response
+
+# [Helper Functions]
+# Create email validation record
+def CreateEmailValidation(email,redirect_addr,data):
+    EmailRecord = EmailValidationRecord()
+    EmailRecord.Email = email
+    EmailRecord.RedirectAddr = redirect_addr
+    EmailRecord.Data = json.dumps(data)
+    EmailRecord.Nonce = random.randint(0,sys.maxint)
+    EmailRecord.save()
