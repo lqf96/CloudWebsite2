@@ -31,8 +31,7 @@ def POST(request):
         return HttpResponse(json.dumps({"Status":"Failed","Reason":"DuplicatedUserNameOrEmail"}),content_type="application/json")
     
     # Create email validation record and save record
-    EmailRecord = EmailValidationRecord()
-    CreateEmailValidation(_Email, \
+    EmailRecord = CreateEmailValidation(_Email, \
         "https://"+request.get_host()+"/Dynamic/Users/UserReg2", \
         {"Email":_Email,"Username":_Username,"Password":_Password})
     # Make email validation address

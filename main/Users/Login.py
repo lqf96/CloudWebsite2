@@ -20,7 +20,8 @@ def POST(request):
     # Log user in
     request.session["Email"] = _Email
     request.session["Username"] = _User.Username
+    request.session["ID"] = _User.id
     request.session["Logged"] = True
     
     # Return to index
-    return HttpResponse(json.dumps({"Status":"Success"}))
+    return HttpResponse(json.dumps({"Status":"Success"}),content_type="application/json")

@@ -18,11 +18,9 @@
     <!-- Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
-    <!-- Assets -->
-    <script src="js/pratt_smoothscroll.js"></script>
     <!-- iTechs Common CSS & JS -->
-    <link href="css/its_common.css" rel="stylesheet">
-    <script src="js/cw_login.js"></script>
+    <link href="/css/its_common.css" rel="stylesheet">
+    <script src="/js/cw_common.js"></script>
 <!-- Set Demo iFrame height -->
 <script>
 function set_demo_height(height)
@@ -44,25 +42,23 @@ function set_demo_height(height)
 	        </div>
 	        <div class="navbar-collapse collapse">
 	          <ul class="nav navbar-nav">
-	            <li class="active"><a href="#home" class="smothscroll">主页</a></li>
-	            <li><a href="projects.html" class="smothScroll">项目</a></li>
-	            <li><a href="#demo" class="smothScroll">Demo</a></li>
-                <li><a href="#contact" class="smothScroll">联系我们</a></li>
-                <li><a href="forum.html">讨论区</a></li>
+	            <li class="active"><a href="#home">主页</a></li>
+	            <li><a href="projects.html">项目</a></li>
+	            <li><a href="#demo">Demo</a></li>
+                <li><a href="#contact">联系我们</a></li>
+                <li><a href="https://forum.thcloud.ml/">论坛</a></li>
               </ul>
-              <!-- Login form -->
-              <form class="navbar-form navbar-right" id="login_form" onsubmit="return false;">
-                  <input type="text" class="form-control" id="inputEmail" name="Email" placeholder="邮箱" />
-                  <div class="its_line_seprator visible-xs-block"></div>
-                  <input type="password" class="form-control" id="inputPassword" name="Password" placeholder="密码" />
-                  <div class="its_line_seprator visible-xs-block"></div>
-                  <input type="submit" class="btn btn-primary" value="Go!" id="login_submit" />
-                  <a href="register.html" class="btn btn-default">注册</a>
-              </form>
+              <!-- Non-logged user region -->
+              <ul class="nav navbar-nav navbar-right" id="logout_region">
+                  <!-- Register -->
+                  <li><a href="/accounts/register.html">注册</a></li>
+                  <!-- Log in -->
+                  <li><a href="/accounts/login.html"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;登录</a></li>
+              </ul>
               <!-- Logged User Status -->
               <ul class="nav navbar-nav navbar-right" id="login_region">
                   <!-- Email -->
-                  <li><a href="javascript:void(0)"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<span id="logged_user_email"></span></a></li>
+                  <li><a href="javascript:void(0)"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<span id="logged_user_name"></span></a></li>
                   <!-- Log out -->
                   <li><a href="javascript:void(0)" id="logout_link"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;登出</a></li>
               </ul>
@@ -135,7 +131,9 @@ function set_demo_height(height)
             <!-- General introduction -->
             <div class="row centered">
                 <br />
-                <h1>清华-EMC未来云计算团队简介 <br class="visible-xs-inline" /></h1><br />
+                <h1>清华-EMC<br class="visible-xs-inline" />
+                未来云计算团队<br class="visible-xs-inline" />
+                简介 <br class="visible-xs-inline" /></h1><br />
                 <p>清华-EMC"未来云计算”兴趣团队由清华大学和易安信信息技术研发（北京）有限公司（EMC）共同发起，旨在为未来云计算领域感兴趣的同学们提供学习、交流、研究和实践的平台，聚焦云计算的基础核心架构、大规模数据的存储与计算，以及基于这些技术的实际应用与创新。</p>
             </div>
             <hr class="its_hr" />

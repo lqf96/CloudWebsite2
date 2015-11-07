@@ -106,7 +106,7 @@ function SubmitRegForm()
 			{	//Failed to send email
 				if (Data.Status=="Failed")
 				{	var Desceription = {
-				        "AlreadyLogged":"用户已经登录！",
+				        "UserAlreadyLogged":"用户已经登录！",
 				        "DuplicatedUserNameOrEmail":"用户名或邮箱已被使用！",
 				        "FailedToSendMail":"邮件发送失败。"
 				    }[Data.Reason];
@@ -130,3 +130,24 @@ function SubmitRegForm()
 			}
 		},"json");
 }
+
+//===== Initialization =====
+$(function()
+{
+    //Check if the user is already logged or not
+    CW.Hooks.LoginStatusChecked.then(function()
+    {   //Not logged
+        if (!CW.Credential.Logged)
+            $("#LoggedUserPrompt").hide();
+        //Logged
+        else
+        {   $("#RegStatusPanel").hide();
+            $("#RegForm").hide();
+            
+            //Redirect to main page after ten seconds
+            setTimeout(function()
+            {   location.href = "/";
+            },10000);
+        }
+    });
+});

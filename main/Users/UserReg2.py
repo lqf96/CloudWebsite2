@@ -9,17 +9,18 @@ from CloudWebsite.CWFoundation import InternalView
 
 # User registration
 @InternalView
-def GET(request):
+def GET(request,iargs):
     NewUser = User()
-    NewUser.Email = request.cw_iargs["Email"]
-    NewUser.Username = request.cw_iargs["Username"]
-    NewUser.Password = request.cw_iargs["Password"]
+    NewUser.Email = iargs["Email"]
+    NewUser.Username = iargs["Username"]
+    NewUser.Password = iargs["Password"]
     NewUser.save()
     
     # Log user in
     request.session["Logged"] = True
-    request.session["Email"] = request.cw_iargs["Email"]
-    request.session["Username"] = request.cw_iargs["Username"]
+    request.session["Email"] = iargs["Email"]
+    request.session["Username"] = iargs["Username"]
+    request.session["ID"] = NewUser.id
     
     # Redirect to main page
     return HttpResponseRedirect("https://"+request.get_host())

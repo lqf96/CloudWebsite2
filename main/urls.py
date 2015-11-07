@@ -10,5 +10,5 @@ import Users, DZ
 urls = []
 # User API paths
 MakeURLList(urls,"Users","Dynamic/")
-# Discussion zone API paths
+# Forum API paths
 MakeURLList(urls,"DZ","Dynamic/")

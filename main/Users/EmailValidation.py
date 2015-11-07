@@ -17,7 +17,7 @@ def GET(request):
         return HttpResponse(json.dumps({"Status":"Failed","Reason":"ValidationInfoNotMatch"}),content_type="application/json")
     
     # Redirect internally to given address
-    response = InternalRedirect(ValidationRecord.RedirectAddr,ValidationRecord.Data)
+    response = InternalRedirect(request,ValidationRecord.RedirectAddr,ValidationRecord.Data)
     # Remove validation record
     ValidationRecord.delete()
     return response
@@ -31,3 +31,4 @@ def CreateEmailValidation(email,redirect_addr,data):
     EmailRecord.Data = json.dumps(data)
     EmailRecord.Nonce = random.randint(0,sys.maxint)
     EmailRecord.save()
+    return EmailRecord

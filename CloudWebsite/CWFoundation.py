@@ -54,21 +54,21 @@ def InternalView(view):
             # Disable internal view access
             request.session["Internal"] = False
             # Append internal arguments to request object
-            request.cw_iargs = json.loads(request.session["InternalArgs"])
+            cw_iargs = json.loads(request.session["InternalArgs"])
             del request.session["InternalArgs"]
             # Handle request
-            return view(request)
+            return view(request,cw_iargs)
         # Not allowed
         else:
             return HttpResponse(json.dumps({"Status":"Failed","Reason":"InternalAccessNotGranted"}),content_type="application/json")
     return IView
 
 # Redirect to an internal view
-def InternalRedirect(address,args):
+def InternalRedirect(request,address,args):
     # Allow visiting internal view
     request.session["Internal"] = True
     # Save internal arguments to session
-    request.session["InternalArgs"] = json.dumps(args) if type(args).__name__=="dict" else argss
+    request.session["InternalArgs"] = args if (type(args).__name__=="str") or (type(args).__name__=="unicode") else json.dumps(args)
     # Do redirection
     return HttpResponseRedirect(address)
 

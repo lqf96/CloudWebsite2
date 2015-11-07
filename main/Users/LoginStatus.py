@@ -10,13 +10,14 @@ import json
 def GET(request):
     # Logged
     if ("Logged" in request.session) and (request.session["Logged"]==True):
-        return HttpResponse(json.dumps({"Status":"Success",
-            "Logged":True,
-            "Email":request.session["Email"],
-            "Username":request.session["Username"]}))
+        return HttpResponse(json.dumps({"Status":"Success", \
+            "Logged":True, \
+            "Email":request.session["Email"], \
+            "Username":request.session["Username"]}), \
+            content_type="application/json")
     # Not logged
     else:
-        return HttpResponse(json.dumps({"Status":"Success","Logged":False}))
+        return HttpResponse(json.dumps({"Status":"Success","Logged":False}),content_type="application/json")
 
 # [Helper Functions]
 # Log-in only view decorator
