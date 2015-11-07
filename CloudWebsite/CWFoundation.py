@@ -4,8 +4,6 @@ from django.conf.urls import url
 # Python system libraries
 import json,inspect
 from datetime import datetime
-# Site settings
-from CloudWebsite.settings import FRONT_END_SERVER
 
 # ===== Routing utils =====
 # Make URL list (Core function)

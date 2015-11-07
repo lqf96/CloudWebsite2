@@ -4,7 +4,7 @@ from urlparse import parse_qs
 # Django libraries
 from django.http import HttpResponse,HttpResponseRedirect
 # CloudWebsite settings
-from django.conf import settings
+from CloudWebsite import settings
 
 # Discourse SSO (Single Sign On)
 def GET(request):
@@ -18,7 +18,7 @@ def GET(request):
     # Redirect to log-in page if user is not logged
     if ("Logged" not in request.session) or (request.session["Logged"]==False):
         login_redirect_addr = base64.encodestring(request.get_full_path())
-        return HttpResponseRedirect("/account/login.html?Next=%s" % login_redirect_addr)
+        return HttpResponseRedirect("https://"+request.get_host()+"/accounts/login.html?Next=%s" % login_redirect_addr)
 
     # Validate the payload
     try:
@@ -42,7 +42,7 @@ def GET(request):
         "nonce": qs["nonce"][0],
         "email": request.session["Email"],
         "external_id": request.session["ID"],
-        "username": request.session["Username"]
+        "username": request.session["Username"].encode("utf-8")
     }
     # Build the return payload
     return_payload = base64.encodestring(urllib.urlencode(params))

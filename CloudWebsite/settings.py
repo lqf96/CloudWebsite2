@@ -105,5 +105,6 @@ EMAIL_HOST_USER = "18612526295@163.com"
 EMAIL_HOST_PASSWORD = "cloud409"
 EMAIL_USE_TLS = True
 
-# Front end server settings
-FRONT_END_SERVER = "nginx"
+# Discourse site informations
+DISCOURSE_BASE_URL = "https://forum.thcloud.ml"
+DISCOURSE_SSO_SECRET = "thcloud_forum_auth"
