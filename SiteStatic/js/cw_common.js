@@ -1,12 +1,12 @@
 //Cloud website variable namespace
 //Root namespace
 var CW = {};
-//Hooks
-CW.Hooks = {};
 
-$(function()
-{   //Check login status to show different content
-    CW.Hooks.LoginStatusChecked = $.get("/Dynamic/Users/LoginStatus",function(data)
+//Hooks namespace
+CW.Hooks = {
+    //* Log-in
+    //Check login status to show different content
+    "LoginStatusChecked":$.get("/Dynamic/Users/LoginStatus",function(data)
     {   
         //Create user credential namespace
         CW.Credential = {};
@@ -16,8 +16,20 @@ $(function()
         {   CW.Credential.Email = data.Email;
             CW.Credential.Username = data.Username;
         }
-    });
-    
+    })
+};
+
+//Site configurations
+CW.Conf = {
+    //* Relative links
+    "RootDomain":"thcloud.tk",
+    "RelativePathElements":["a","link"],
+    "RelativePathProps":["href","src"]
+};
+
+$(function()
+{   
+    //* Log-in
     //Hide or show regions according to login status
     CW.Hooks.LoginStatusChecked.then(function()
     {
@@ -37,4 +49,22 @@ $(function()
         {   location.reload();
         });
     });
+    
+    //* Relative links
+    //Generate absolute addresses from configurations
+    for (i in CW.Conf.RelativePathElements)
+    {   var ElementName = CW.Conf.RelativePathElements[i];
+        $(ElementName+".cw-relative-url").each(function()
+        {   for (j in CW.Conf.RelativePathProps)
+            {   var PropName = CW.Conf.RelativePathProps[j];
+                if (!$(this).attr("cw-"+PropName+"-domain"))
+                    continue;
+                
+                var AbsoluteURL = "https://"+$(this).attr("cw-"+PropName+"-domain")+"."+CW.Conf.RootDomain;
+                if ($(this).attr("cw-"+PropName+"-path"))
+                    AbsoluteURL += $(this).attr("cw-"+PropName+"-path");
+                $(this).attr(PropName,AbsoluteURL);
+            }
+        });
+    }
 });
