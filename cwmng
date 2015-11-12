@@ -1,0 +1,11 @@
+#!/bin/bash
+# Check if virtual environment exists
+if [ -d "$(dirname $0)/CWVEnv" ]; then
+    # Start a separate shell and init virtual environment,
+    # then run manage.py
+    (cd $(dirname $0); . CWVEnv/bin/activate; python ./manage.py "$@")
+# Virtual environment not exists, show error information
+else
+    echo "Python virtual environment not found!"
+    echo "Please ensure that virtualenv is installed and virtual environment folder \"CWVEnv\" exists!"
+fi
