@@ -9,11 +9,11 @@ import json
 @ensure_csrf_cookie
 def GET(request):
     # Logged
-    if request.user.is_authenticated():
+    if ("Logged" in request.session) and (request.session["Logged"]==True):
         return HttpResponse(json.dumps({"Status":"Success", \
             "Logged":True, \
-            "Email":request.user.email, \
-            "Username":request.user.username}), \
+            "Email":request.session["Email"], \
+            "Username":request.session["Username"]}), \
             content_type="application/json")
     # Not logged
     else:
@@ -24,7 +24,7 @@ def GET(request):
 def Login(view):
     def LoginView(request):
         # User logged
-        if request.user.is_authenticated():
+        if ("Logged" in request.session) and (request.session["Logged"]==True):
             return view(request)
         # Not logged
         else:
@@ -35,7 +35,7 @@ def Login(view):
 def Logout(view):
     def LogoutView(request):
         # User not logged
-        if not request.user.is_authenticated():
+        if ("Logged" not in request.session) or (request.session["Logged"]==False):
             return view(request)
         # Not logged
         else:

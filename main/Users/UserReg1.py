@@ -25,7 +25,7 @@ def POST(request):
     _Email = request.POST.get("Email","")
     _Username = request.POST.get("Username","")
     _Password = request.POST.get("Password","")
-    SearchResult = User.objects.filter(Q(email=_Email)|Q(username=_Username))
+    SearchResult = User.objects.filter(Q(Email=_Email)|Q(Username=_Username))
     # User found
     if len(SearchResult)!=0:
         return HttpResponse(json.dumps({"Status":"Failed","Reason":"DuplicatedUserNameOrEmail"}),content_type="application/json")
