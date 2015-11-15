@@ -16,7 +16,7 @@ def GET(request):
         return HttpResponse(json.dumps({"Status":"Failed","Reason":"SSOPayloadOrSignatureNotFound"}),content_type="application/json")
 
     # Redirect to log-in page if user is not logged
-    if ("Logged" not in request.session) or (request.session["Logged"]==False):
+    if not request.user.is_authenticated():
         login_redirect_addr = base64.encodestring(request.get_full_path())
         return HttpResponseRedirect("https://"+request.get_host()+"/accounts/login.html?Next=%s" % login_redirect_addr)
 
@@ -24,7 +24,7 @@ def GET(request):
     try:
         payload = urllib.unquote(payload)
         decoded = base64.decodestring(payload)
-        assert 'nonce' in decoded
+        assert "nonce" in decoded
         assert len(payload) > 0
     except AssertionError:
         return HttpResponse(json.dumps({"Status":"Failed","Reason":"InvalidPayload"}),content_type="application/json")
@@ -40,9 +40,9 @@ def GET(request):
     qs = parse_qs(decoded)
     params = {
         "nonce": qs["nonce"][0],
-        "email": request.session["Email"],
-        "external_id": request.session["ID"],
-        "username": request.session["Username"].encode("utf-8")
+        "email": request.user.email,
+        "external_id": request.user.id,
+        "username": request.user.username.encode("utf-8")
     }
     # Build the return payload
     return_payload = base64.encodestring(urllib.urlencode(params))

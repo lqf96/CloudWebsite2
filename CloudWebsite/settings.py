@@ -12,14 +12,13 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+# Site sensitive secret
+from CloudWebsite.sensitive_settings import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'c26x3b%ydh(ar&d)(c&fv^l+40o2fs!9bw51bu379$4793yl-h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -73,23 +72,23 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'CloudWebsite.wsgi.application'
-
+# WSGI application
+WSGI_APPLICATION = "CloudWebsite.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 # (SQLite3 is used for debugging, while MySQL will be used in production)
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default":{
+        "ENGINE":"django.db.backends.sqlite3",
+        "NAME":os.path.join(BASE_DIR,"db.sqlite3"),
     }
 }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "UTC"
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -97,14 +96,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "AdminStatic")
+STATIC_ROOT = os.path.join(BASE_DIR,"AdminStatic")
 
 # Mail settings
 EMAIL_HOST = "smtp.163.com"
-EMAIL_HOST_USER = "18612526295@163.com"
-EMAIL_HOST_PASSWORD = "cloud409"
 EMAIL_USE_TLS = True
 
 # Discourse site informations
 DISCOURSE_BASE_URL = "https://forum.thcloud.ml"
-DISCOURSE_SSO_SECRET = "thcloud_forum_auth"
+
+# Insecure content proxy address
+ICP_ADDR = "https://thcws.sinaapp.com/icp/"

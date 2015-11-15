@@ -1,5 +1,6 @@
 # Django libraries
 from django.http import HttpResponse,HttpResponseRedirect
+from django.contrib.auth import login
 # Models
 from main.UserModels import User
 # Python system libraries
@@ -17,10 +18,6 @@ def GET(request,iargs):
     NewUser.save()
     
     # Log user in
-    request.session["Logged"] = True
-    request.session["Email"] = iargs["Email"]
-    request.session["Username"] = iargs["Username"]
-    request.session["ID"] = NewUser.id
-    
+    login(request,NewUser)
     # Redirect to main page
     return HttpResponseRedirect("https://"+request.get_host())

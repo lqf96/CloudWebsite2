@@ -3,3 +3,4 @@
 *.out
 /CWVEnv
 /Certificates
+/CloudWebsite/sensitive_settings.py
