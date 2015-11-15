@@ -106,5 +106,5 @@ EMAIL_HOST_PASSWORD = "cloud409"
 EMAIL_USE_TLS = True
 
 # Discourse site informations
-DISCOURSE_BASE_URL = "https://forum.thcloud.ml"
+DISCOURSE_BASE_URL = "https://forum.thcloud.tk"
 DISCOURSE_SSO_SECRET = "thcloud_forum_auth"
