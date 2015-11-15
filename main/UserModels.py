@@ -1,5 +1,7 @@
 # Django libraries
 from django.db import models
+# Django admin site user
+from django.contrib.auth.models import User as DjangoUser
 
 # User groups
 class Group(models.Model):
@@ -11,6 +13,7 @@ class User(models.Model):
     Email = models.EmailField()
     Password = models.CharField(max_length=32)
     Username = models.CharField(max_length=32)
+    AdminUser = models.OneToOneField(DjangoUser)
 
 # Email validation records
 class EmailValidationRecord(models.Model):
