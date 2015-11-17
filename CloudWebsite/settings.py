@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # Allowed hosts
-ALLOWED_HOSTS = ["www.thcloud.ml","thcloud.ml"]
+ALLOWED_HOSTS = ["www.thcloud.org","thcloud.org"]
 
 # Application definition
 INSTALLED_APPS = (
@@ -103,7 +103,7 @@ EMAIL_HOST = "smtp.163.com"
 EMAIL_USE_TLS = True
 
 # Discourse site informations
-DISCOURSE_BASE_URL = "https://forum.thcloud.tk"
+DISCOURSE_BASE_URL = "https://forum.thcloud.org"
 
 # Insecure content proxy address
 ICP_ADDR = "https://thcws.sinaapp.com/icp/"

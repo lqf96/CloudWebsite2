@@ -22,7 +22,7 @@ CW.Hooks = {
 //Site configurations
 CW.Conf = {
     //* Relative links
-    "RootDomain":"thcloud.tk",
+    "RootDomain":"thcloud.org",
     "RelativePathElements":["a","link"],
     "RelativePathProps":["href","src"]
 };

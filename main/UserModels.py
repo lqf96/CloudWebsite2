@@ -13,7 +13,7 @@ class User(models.Model):
     Email = models.EmailField()
     Password = models.CharField(max_length=32)
     Username = models.CharField(max_length=32)
-    AdminUser = models.OneToOneField(DjangoUser)
+    AdminUser = models.OneToOneField(DjangoUser,null=True)
 
 # Email validation records
 class EmailValidationRecord(models.Model):

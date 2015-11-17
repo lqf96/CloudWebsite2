@@ -1,6 +1,10 @@
+# Temp files
 *.pyc
 *.sqlite3
 *.out
+
+# Folders not to be updated
 /CWVEnv
 /Certificates
 /CloudWebsite/sensitive_settings.py
+migrations
