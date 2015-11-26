@@ -1,0 +1,27 @@
+/* Bootstrap style amendment */
+body
+{	/* Use Microsoft YaHei as default Chinese font */
+	font-family: "Helvetica Neue",Helvetica,"Microsoft YaHei",Arial,sans-serif;
+}
+
+/* Horizontal rule with a smaller margin */
+.its_hr
+{	margin-top: 12px;
+	margin-bottom: 12px;
+}
+
+/* Line separator */
+.its_line_seprator
+{	height: 8px;
+}
+
+/* Break URL */
+.its_break_word
+{   word-wrap: break-word;
+    word-break: break-all;
+}
+
+/* Title */
+.its_head_title
+{   font-size: 72px;
+}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{# Title #}
+{% block title %}未来云计算社团 官方网站 - 登录{% endblock %}
+{# Custom head extension #}
+{% block custom_head %}
+<!-- jQuery URL Parser -->
+<script src="https://cdn.bootcss.com/jquery-url-parser/2.3.1/purl.min.js"></script>
+<!-- Log-in page script -->
+<script src="assets/js/cw_login.js"></script>
+{% endblock %}
+{# Page content #}
+{% block content %}
+<!-- Register form -->
+<div class="container">
+  <div class="col-sm-3"></div>
+  <!-- Log-in zone -->
+  <div class="col-sm-6">
+    <br />
+    <h1 class="centered">未来云计算<br class="visible-xs-inline" />官网登录</h1>
+    <hr />
+    <div class="panel panel-info" id="LoginStatusPanel">
+      <div class="panel-body" id="LoginStatus">
+        还没有账户？点击<a href="register.html">此处</a>注册。
+      </div>
+    </div>
+    <form onsubmit="return false;" class="form-group" id="LoginForm">
+      <!-- Email -->
+      <input id="r_inputEmail" class="form-control" type="text" name="inputEmail" placeholder="邮箱"/>
+      <br />
+      <!-- Password -->
+      <input id="r_inputPassword" class="form-control" type="password" name="inputPassword" placeholder="密码" />
+      <hr />
+      <!-- Log-in button -->
+      <button class="btn btn-primary" id="LoginBtn">登录</button>
+      <!-- Forget password -->
+      <a class="btn btn-default pull-right" href="reset_pswd.html">忘记密码</a>
+    </form>
+    <!-- Redirect logged user -->
+    {% extends "logged_nav.html" %}
+  </div>
+</div>
+{% endblock %}
